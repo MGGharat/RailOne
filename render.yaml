@@ -32,7 +32,7 @@ services:
         generateValue: true
 
       - key: CORS_ORIGINS
-        value: "https://railone-ten.vercel.app,https://railone-lilac.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
+        value: '["https://railone-ten.vercel.app","https://railone-lilac.vercel.app","http://localhost:5173","http://127.0.0.1:5173"]'
 
   # 2. RailOne Redis-compatible Key Value Store
   - type: keyvalue
