@@ -38,6 +38,7 @@ services:
   - type: keyvalue
     name: railone-redis
     plan: free
+    ipAllowList: []
 
 databases:
 
