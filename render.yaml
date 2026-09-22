@@ -1,0 +1,41 @@
+# Render Blueprint Specification for RailOne Backend, PostgreSQL, and Redis
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  # 1. RailOne FastAPI Backend Web Service
+  - type: web
+    name: railone-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: starter
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: railone-postgres
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: railone-redis
+          property: connectionString
+      - key: REDIS_ENABLED
+        value: "true"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "https://railone-ten.vercel.app,https://railone-lilac.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
+
+  # 2. Redis Key-Value Store & Cache
+  - type: redis
+    name: railone-redis
+    plan: starter
+    ipAllowList: [] # Internal only
+
+databases:
+  # 3. PostgreSQL Database
+  - name: railone-postgres
+    databaseName: railone_db
+    user: rail_user
+    plan: starter
