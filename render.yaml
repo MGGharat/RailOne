@@ -3,7 +3,7 @@
 
 services:
 
-  # 1. RailOne FastAPI Backend
+  # RailOne FastAPI Backend
   - type: web
     name: railone-backend
     runtime: docker
@@ -19,14 +19,8 @@ services:
           name: railone-postgres
           property: connectionString
 
-      - key: REDIS_URL
-        fromService:
-          type: keyvalue
-          name: railone-redis
-          property: connectionString
-
       - key: REDIS_ENABLED
-        value: "true"
+        value: "false"
 
       - key: SECRET_KEY
         generateValue: true
@@ -34,15 +28,9 @@ services:
       - key: CORS_ORIGINS
         value: '["https://railone-ten.vercel.app","https://railone-lilac.vercel.app","http://localhost:5173","http://127.0.0.1:5173"]'
 
-  # 2. RailOne Redis-compatible Key Value Store
-  - type: keyvalue
-    name: railone-redis
-    plan: free
-    ipAllowList: []
-
 databases:
 
-  # 3. RailOne PostgreSQL Database
+  # RailOne PostgreSQL Database
   - name: railone-postgres
     databaseName: railone_db
     user: rail_user
