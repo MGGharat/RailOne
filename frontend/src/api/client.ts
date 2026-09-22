@@ -22,6 +22,7 @@ const api = axios.create({
   baseURL: apiBase,
   headers: {
     'Content-Type': 'application/json',
+    'Bypass-Tunnel-Reminder': 'true',
   },
   timeout: 25000,
 });
